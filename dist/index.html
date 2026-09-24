@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Швидкий доступ до AI-інструментів для навчання та розробки."
+    />
+    <title>AI Resource Garden</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%235572F6'/%3E%3Cpath d='M15 39c10-22 22-26 35-22-7 6-10 13-12 22-7-7-15-5-23 0Z' fill='%23FFDF4D'/%3E%3Ccircle cx='43' cy='19' r='4' fill='%237DD356'/%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        --sky: #5874f6;
+        --sky-deep: #3855df;
+        --sun: #ffdf4d;
+        --grass: #76c952;
+        --grass-deep: #379d54;
+        --ink: #17223f;
+        --paper: #fffdf4;
+        --line: rgba(23, 34, 63, 0.16);
+        --shadow: 0 12px 0 rgba(23, 34, 63, 0.17);
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--sky);
+      }
+
+      a { color: inherit; }
+
+      .sky {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        min-height: 100vh;
+        padding: clamp(1.25rem, 3vw, 2.6rem) 1rem 0;
+        background:
+          radial-gradient(ellipse at 18% 11%, rgba(255,255,255,.24) 0 8%, transparent 24%),
+          radial-gradient(ellipse at 84% 16%, rgba(255,255,255,.18) 0 7%, transparent 20%),
+          linear-gradient(180deg, var(--sky) 0%, #6c87ff 68%, var(--grass) 68%, var(--grass-deep) 100%);
+      }
+
+      .sky::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        pointer-events: none;
+        opacity: .28;
+        background-image: linear-gradient(125deg, transparent 0 47%, rgba(255,255,255,.35) 48% 49%, transparent 50% 100%);
+        background-size: 37px 37px;
+      }
+
+      .page {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        color: var(--paper);
+      }
+
+      .topbar p {
+        margin: 0;
+        font-size: .88rem;
+        font-weight: 800;
+        letter-spacing: .07em;
+        text-transform: uppercase;
+      }
+
+      .topbar a {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        padding: .63rem .82rem;
+        border: 2px solid rgba(255,255,255,.65);
+        border-radius: 999px;
+        text-decoration: none;
+        font-size: .88rem;
+        font-weight: 800;
+        transition: transform .18s ease, background .18s ease;
+      }
+
+      .topbar a:hover, .topbar a:focus-visible {
+        transform: translateY(-2px);
+        background: rgba(255,255,255,.16);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.15fr .85fr;
+        align-items: end;
+        gap: 2rem;
+        padding: clamp(2.6rem, 8vw, 6rem) .3rem clamp(2.2rem, 5vw, 4rem);
+        color: var(--paper);
+      }
+
+      .eyebrow {
+        margin: 0 0 .7rem;
+        color: var(--sun);
+        font-size: .92rem;
+        font-weight: 900;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+
+      h1, h2, h3, p { margin-top: 0; }
+
+      h1 {
+        max-width: 720px;
+        margin-bottom: 1rem;
+        color: var(--sun);
+        font-family: "Brush Script MT", "Segoe Script", cursive;
+        font-size: clamp(4rem, 9vw, 7.5rem);
+        font-weight: 700;
+        letter-spacing: -.075em;
+        line-height: .82;
+        text-wrap: balance;
+        text-shadow: 3px 4px 0 rgba(56, 85, 223, .38);
+      }
+
+      .hero-copy {
+        max-width: 590px;
+        margin-bottom: 0;
+        color: rgba(255,253,244,.96);
+        font-size: clamp(1.05rem, 2vw, 1.27rem);
+        font-weight: 650;
+        line-height: 1.55;
+      }
+
+      .hero-note {
+        justify-self: end;
+        width: min(310px, 100%);
+        padding: 1.1rem 1.2rem;
+        color: var(--ink);
+        background: var(--sun);
+        border: 3px solid var(--ink);
+        border-radius: 1.2rem 1.2rem 1.2rem .25rem;
+        box-shadow: 8px 8px 0 rgba(23,34,63,.5);
+        transform: rotate(2deg);
+      }
+
+      .hero-note strong { display: block; margin-bottom: .35rem; font-size: 1.1rem; }
+      .hero-note p { margin: 0; font-size: .96rem; font-weight: 650; line-height: 1.45; }
+
+      main {
+        position: relative;
+        padding: clamp(1.3rem, 3vw, 2.3rem) 0 4rem;
+      }
+
+      .intro {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin: 0 .25rem 1.15rem;
+      }
+
+      .intro h2 {
+        margin-bottom: .35rem;
+        color: var(--paper);
+        font-size: clamp(1.6rem, 4vw, 2.55rem);
+        letter-spacing: -.045em;
+      }
+
+      .intro p { margin: 0; color: rgba(255,253,244,.92); font-weight: 600; }
+
+      .resource-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .resource-card {
+        display: flex;
+        flex-direction: column;
+        min-height: 236px;
+        padding: 1.25rem;
+        background: var(--paper);
+        border: 3px solid var(--ink);
+        border-radius: 1.25rem;
+        box-shadow: var(--shadow);
+        transition: transform .18s ease, box-shadow .18s ease;
+      }
+
+      .resource-card:hover {
+        transform: translateY(-5px) rotate(-.25deg);
+        box-shadow: 0 17px 0 rgba(23,34,63,.19);
+      }
+
+      .resource-card:nth-child(even) { transform: rotate(.45deg); }
+      .resource-card:nth-child(even):hover { transform: translateY(-5px) rotate(.1deg); }
+
+      .card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .75rem;
+      }
+
+      .mark {
+        display: grid;
+        place-items: center;
+        width: 2.65rem;
+        height: 2.65rem;
+        color: var(--ink);
+        background: var(--sun);
+        border: 2px solid var(--ink);
+        border-radius: 50% 44% 49% 46%;
+        font-size: 1.2rem;
+        font-weight: 950;
+      }
+
+      .tag {
+        margin: 0;
+        color: #3154b7;
+        font-size: .72rem;
+        font-weight: 900;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+      }
+
+      .resource-card h3 { margin: 1.05rem 0 .45rem; font-size: 1.34rem; letter-spacing: -.03em; }
+      .resource-card p { margin-bottom: 1.1rem; color: #45506a; font-size: .96rem; font-weight: 600; line-height: 1.45; }
+
+      .card-actions {
+        display: flex;
+        align-items: center;
+        gap: .55rem;
+        margin-top: auto;
+      }
+
+      .open-link, .copy-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.7rem;
+        border: 2px solid var(--ink);
+        font: inherit;
+        font-size: .9rem;
+        font-weight: 850;
+        cursor: pointer;
+      }
+
+      .open-link {
+        flex: 1;
+        padding: .55rem .7rem;
+        color: var(--ink);
+        background: var(--sun);
+        border-radius: .7rem;
+        text-decoration: none;
+      }
+
+      .copy-button {
+        width: 2.75rem;
+        color: var(--ink);
+        background: #fff;
+        border-radius: .7rem;
+      }
+
+      .open-link:hover, .open-link:focus-visible, .copy-button:hover, .copy-button:focus-visible {
+        outline: 0;
+        color: var(--paper);
+        background: var(--sky-deep);
+      }
+
+      .resource-card small {
+        display: block;
+        overflow: hidden;
+        margin-top: .75rem;
+        color: #65708b;
+        font-size: .72rem;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .bottom-note {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: .9rem;
+        max-width: 760px;
+        margin: 2.25rem auto 0;
+        padding: 1rem 1.2rem;
+        color: var(--paper);
+        border-top: 2px solid rgba(255,253,244,.55);
+        border-bottom: 2px solid rgba(255,253,244,.55);
+      }
+
+      .bottom-note span { font-size: 1.65rem; }
+      .bottom-note p { margin: 0; font-size: .96rem; font-weight: 650; line-height: 1.5; }
+
+      .toast {
+        position: fixed;
+        right: 1rem;
+        bottom: 1rem;
+        z-index: 4;
+        padding: .7rem .95rem;
+        color: var(--paper);
+        background: var(--ink);
+        border: 2px solid var(--paper);
+        border-radius: .7rem;
+        font-weight: 800;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(1rem);
+        transition: opacity .18s ease, transform .18s ease;
+      }
+
+      .toast.is-visible { opacity: 1; transform: translateY(0); }
+
+      @media (max-width: 800px) {
+        .hero { grid-template-columns: 1fr; gap: 1.6rem; }
+        .hero-note { justify-self: start; }
+        .resource-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+
+      @media (max-width: 530px) {
+        .sky { padding-inline: .8rem; }
+        .topbar p { font-size: .72rem; }
+        .topbar a { padding: .52rem .64rem; font-size: .76rem; }
+        h1 { font-size: clamp(3.65rem, 20vw, 5.4rem); }
+        .resource-grid { grid-template-columns: 1fr; }
+        .intro { display: block; }
+        .intro p { margin-top: .5rem; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sky">
+      <div class="page">
+        <header class="topbar">
+          <p>AI для навчання та коду</p>
+          <a href="#resources" aria-label="Перейти до списку ресурсів">Обрати інструмент ↓</a>
+        </header>
+
+        <section class="hero" aria-labelledby="page-title">
+          <div>
+            <p class="eyebrow">Твоя мапа AI-інструментів</p>
+            <h1 id="page-title">AI Garden</h1>
+            <p class="hero-copy">Сім перевірених ресурсів для моменту, коли ліміт одного сервісу закінчився, а твоя робота ні.</p>
+          </div>
+          <aside class="hero-note" aria-label="Підказка">
+            <strong>Маленький принцип</strong>
+            <p>Не створюй новий акаунт. Обери інструмент під конкретну задачу.</p>
+          </aside>
+        </section>
+
+        <main id="resources">
+          <div class="intro">
+            <div>
+              <h2>Відкрий свій наступний маршрут</h2>
+              <p>Натисни «Відкрити» або скопіюй посилання одним кліком.</p>
+            </div>
+          </div>
+
+          <section class="resource-grid" aria-label="Посилання на AI-ресурси">
+            <article class="resource-card">
+              <div class="card-top"><span class="mark">GH</span><span class="tag">IDE-помічник</span></div>
+              <h3>GitHub Copilot</h3>
+              <p>Автодоповнення, невеликі зміни та швидкі підказки прямо в редакторі коду.</p>
+              <div class="card-actions">
+                <a class="open-link" href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer">Відкрити ↗</a>
+                <button class="copy-button" type="button" data-url="https://github.com/features/copilot" aria-label="Скопіювати посилання на GitHub Copilot" title="Скопіювати посилання">⧉</button>
+              </div>
+              <small>github.com/features/copilot</small>
+            </article>
+
+            <article class="resource-card">
+              <div class="card-top"><span class="mark">C</span><span class="tag">AI-агент</span></div>
+              <h3>OpenAI Codex</h3>
+              <p>Для складніших задач, роботи з кількома файлами й розуміння контексту проєкту.</p>
+              <div class="card-actions">
+                <a class="open-link" href="https://openai.com/codex/" target="_blank" rel="noopener noreferrer">Відкрити ↗</a>
+                <button class="copy-button" type="button" data-url="https://openai.com/codex/" aria-label="Скопіювати посилання на OpenAI Codex" title="Скопіювати посилання">⧉</button>
+              </div>
+              <small>openai.com/codex</small>
+            </article>
+
+            <article class="resource-card">
+              <div class="card-top"><span class="mark">A</span><span class="tag">Аналіз</span></div>
+              <h3>Claude</h3>
+              <p>Зручно для великих пояснень, рефакторингу та аналізу об’ємних фрагментів коду.</p>
+              <div class="card-actions">
+                <a class="open-link" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Відкрити ↗</a>
+                <button class="copy-button" type="button" data-url="https://claude.ai/" aria-label="Скопіювати посилання на Claude" title="Скопіювати посилання">⧉</button>
+              </div>
+              <small>claude.ai</small>
+            </article>
+
+            <article class="resource-card">
+              <div class="card-top"><span class="mark">G</span><span class="tag">API</span></div>
+              <h3>Google AI Studio</h3>
+              <p>Доступ до Gemini API: експерименти з моделями та робота з власним API key.</p>
+              <div class="card-actions">
+                <a class="open-link" href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer">Відкрити ↗</a>
+                <button class="copy-button" type="button" data-url="https://aistudio.google.com/" aria-label="Скопіювати посилання на Google AI Studio" title="Скопіювати посилання">⧉</button>
+              </div>
+              <small>aistudio.google.com</small>
+            </article>
+
+            <article class="resource-card">
+              <div class="card-top"><span class="mark">AG</span><span class="tag">Workspace</span></div>
+              <h3>Antigravity</h3>
+              <p>Середовище, де AI-агенти можуть працювати з кодом, терміналом і задачами проєкту.</p>
+              <div class="card-actions">
+                <a class="open-link" href="https://antigravity.google/docs/home" target="_blank" rel="noopener noreferrer">Відкрити ↗</a>
+                <button class="copy-button" type="button" data-url="https://antigravity.google/docs/home" aria-label="Скопіювати посилання на Antigravity" title="Скопіювати посилання">⧉</button>
+              </div>
+              <small>antigravity.google/docs/home</small>
+            </article>
+
+            <article class="resource-card">
+              <div class="card-top"><span class="mark">CL</span><span class="tag">BYOK-клієнт</span></div>
+              <h3>Cline</h3>
+              <p>Один інтерфейс у редакторі, до якого можна під’єднати різних AI-провайдерів.</p>
+              <div class="card-actions">
+                <a class="open-link" href="https://cline.bot/" target="_blank" rel="noopener noreferrer">Відкрити ↗</a>
+                <button class="copy-button" type="button" data-url="https://cline.bot/" aria-label="Скопіювати посилання на Cline" title="Скопіювати посилання">⧉</button>
+              </div>
+              <small>cline.bot</small>
+            </article>
+
+            <article class="resource-card">
+              <div class="card-top"><span class="mark">O</span><span class="tag">Локально</span></div>
+              <h3>Ollama</h3>
+              <p>Запуск локальних моделей на своєму комп’ютері, зокрема для приватних або offline-задач.</p>
+              <div class="card-actions">
+                <a class="open-link" href="https://ollama.com/" target="_blank" rel="noopener noreferrer">Відкрити ↗</a>
+                <button class="copy-button" type="button" data-url="https://ollama.com/" aria-label="Скопіювати посилання на Ollama" title="Скопіювати посилання">⧉</button>
+              </div>
+              <small>ollama.com</small>
+            </article>
+          </section>
+
+          <aside class="bottom-note" aria-label="Нагадування про безпеку">
+            <span aria-hidden="true">🔐</span>
+            <p><strong>Пам’ятай:</strong> API key — це секрет. Не вставляй справжній ключ у код, презентацію, чат чи GitHub-репозиторій.</p>
+          </aside>
+        </main>
+      </div>
+    </div>
+    <div class="toast" role="status" aria-live="polite">Посилання скопійовано</div>
+    <script>
+      const toast = document.querySelector('.toast');
+      let toastTimer;
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('is-visible');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 1800);
+      }
+
+      document.querySelectorAll('.copy-button').forEach((button) => {
+        button.addEventListener('click', async () => {
+          const url = button.dataset.url;
+          try {
+            await navigator.clipboard.writeText(url);
+            showToast('Посилання скопійовано');
+          } catch {
+            const area = document.createElement('textarea');
+            area.value = url;
+            document.body.appendChild(area);
+            area.select();
+            document.execCommand('copy');
+            area.remove();
+            showToast('Посилання скопійовано');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
