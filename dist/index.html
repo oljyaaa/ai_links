@@ -307,6 +307,26 @@
       .bottom-note span { font-size: 1.65rem; }
       .bottom-note p { margin: 0; font-size: .96rem; font-weight: 650; line-height: 1.5; }
 
+      .creator-credit {
+        margin: 1.2rem 0 0;
+        text-align: center;
+      }
+
+      .creator-credit a {
+        color: rgba(255,253,244,.72);
+        font-size: .75rem;
+        font-weight: 750;
+        letter-spacing: .04em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .creator-credit a:hover, .creator-credit a:focus-visible {
+        color: var(--sun);
+        text-decoration: underline;
+        text-underline-offset: .22rem;
+      }
+
       .toast {
         position: fixed;
         right: 1rem;
@@ -458,6 +478,7 @@
             <span aria-hidden="true">🔐</span>
             <p><strong>Пам’ятай:</strong> API key — це секрет. Не вставляй справжній ключ у код, презентацію, чат чи GitHub-репозиторій.</p>
           </aside>
+          <p class="creator-credit"><a href="https://www.linkedin.com/in/olha-solohub-2977b1351/" target="_blank" rel="me noopener noreferrer">creator · Olha Solohub ↗</a></p>
         </main>
       </div>
     </div>
